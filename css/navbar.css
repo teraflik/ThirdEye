@@ -6,7 +6,7 @@ body,
 html { height: 100%;}
 .nav .open > a, 
 .nav .open > a:hover, 
-.nav .open > a:focus {background-color: transparent;}
+.nav .open > a:focus {background-color: white;}
 
 /*-------------------------------*/
 /*           Wrappers            */
@@ -176,7 +176,7 @@ html { height: 100%;}
   width: 32px;
   height: 32px;
   margin-left: 15px;
-  background: transparent;
+  background: white;
   border: none;
 }
 .hamburger:hover,

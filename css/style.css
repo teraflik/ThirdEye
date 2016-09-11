@@ -170,14 +170,14 @@
 .at-user__name {
   color: #313435;
   font-family: 'Roboto', sans-serif;
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 500;
-  line-height: 2.625rem;
+  line-height: 3rem;
 }
 .at-user__title {
   color: #6F808A;
   font-family: 'Roboto', sans-serif;
-  font-size: 0.875rem;
+  font-size: 1.5rem;
   line-height: 2.375rem;
 }
 .at-social {

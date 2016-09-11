@@ -143,16 +143,41 @@ function insert_res_details($res_name,$description){
 	
 }
 
-function rankings($conn){
+function rankings($conn, $cat){
 	
-	$sql="SELECT res_name, Average FROM res ORDER BY Average";
+	$sql="SELECT res_name, category, description, Average FROM res WHERE category='$cat' ORDER BY Average DESC";
 	$res=mysqli_query($conn, $sql);
+	$i=0;
+	$color=array('Red',"Light-Blue","Green",'Purple','Deep-Purple','Indigo',"Blue","Cyan","Teal","Light-Green","Lime","Yellow","Amber","Orange","Deep-Orange","Brown","Blue-Grey",'Pink');
 	if($res){
-		echo '<table width="100%" border="1"><tr><td>Book</td><td>Rank</td></tr>';
+		
 		while($row=mysqli_fetch_array($res)){	
-			echo '<tr><td>'.$row['res_name'].'</td><td>'.$row['Average'].'</td></tr>';	
+			if($i%2==0){$ch="c.png";}
+			else{ $ch = "c1.png";}
+			if($cat == 'Java'){$ch="java.png";}
+			if($cat == 'Python'){$ch="python.png";}
+			echo '<div class="col-md-4 col-sm-6 col-xs-12">
+			<article class="material-card '.$color[$i].'">
+			<h2><span>'.$row['res_name'].'</span><strong>
+                        <i class="fa fa-fw fa-star"></i>'.$cat.' Programming</strong></h2> 
+				<div class="mc-content">
+				 <div class="img-container">
+				 <img class="img-responsive" src="media/'.$ch.'">
+				 </div><div class="mc-description">'.$row['description'].'<br><br><h4>Links:</h4><h3><a class="fa fa-fw fa-youtube"></a> <a class="fa fa-fw fa-globe"></a></h3></h4></div></div>
+                <a class="mc-btn-action">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <div class="mc-footer">
+                    <h4>
+                    </h4>
+                    <h3>Rating: '.$row['Average'].'/5</h3>
+                </div>
+            </article>
+        </div> 
+				<!--<span class="rating">'.$row['Average'].'</span> </div>-->';
+				$i = $i+1;
 		}	
-		echo '</table>';
+		
 	}	
 }
 
