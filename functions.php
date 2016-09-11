@@ -120,7 +120,20 @@ function insert_rating($conn,$resid,$rating){
 	$currdate = date('d-m-Y');
 	$sql="INSERT INTO ratings(res_id,rating_val,rating_date)values($resid,$rating,NOW())";
 	mysqli_query($conn,$sql);
-	
+	$sql2 = "SELECT Average,n FROM res where res_ID=$resid";
+	$res = mysqli_query($conn,$sql2);
+	if(mysqli_query($conn, $sql)){
+	  echo "Selected.";
+	}
+	else{ 
+	  echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+	}
+	$result=mysqli_fetch_array($res);
+	$n = $result['n'];
+	$average = ($result['Average']*$n + $rating) / ($n+1);
+	$n = $n+1;
+	$sql = "UPDATE res SET Average=$average, n=$n where res_ID = $resid";
+	mysqli_query($conn,$sql);
 }
 
 function insert_res_details($res_name,$description){
@@ -132,12 +145,12 @@ function insert_res_details($res_name,$description){
 
 function rankings($conn){
 	
-	$sql="SELECT AVG(ratings.rating_val) as ave,res.res_name FROM ratings,res WHERE ratings.res_id = res.res_ID ORDER BY ave LIMIT 3";
+	$sql="SELECT res_name, Average FROM res ORDER BY Average";
 	$res=mysqli_query($conn, $sql);
 	if($res){
 		echo '<table width="100%" border="1"><tr><td>Book</td><td>Rank</td></tr>';
 		while($row=mysqli_fetch_array($res)){	
-			echo '<tr><td>'.$row['res_name'].'</td><td>'.$row['ave'].'</td></tr>';	
+			echo '<tr><td>'.$row['res_name'].'</td><td>'.$row['Average'].'</td></tr>';	
 		}	
 		echo '</table>';
 	}	
